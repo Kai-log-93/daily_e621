@@ -9,23 +9,23 @@ def load_to_sqlite(images_key_info):
 
     # create if not exist
     cursor.execute('''CREATE TABLE IF NOT EXISTS E621today
-        (Width INT, Height INT, Ext TEXT, Url TEXT)''')
+        (Width INT, Height INT, Ext TEXT, Url TEXT, Created_at TEXT)''')
 
     # clear yesterday data before load new
     cursor.execute('''DELETE FROM E621today''')
     #only for print
     records = cursor.execute('''SELECT * FROM E621today''')
-    print('from database: ')
+    # print('from database: ')
     
     
     # load data for today
-    cursor.executemany('''INSERT INTO E621today VALUES (?,?,?,?)''', images_key_info)
+    cursor.executemany('''INSERT INTO E621today VALUES (?,?,?,?,?)''', images_key_info)
 
     # print all
     records = cursor.execute('''SELECT * FROM E621today''')
 
-    print('from database: ')
-    print(cursor.fetchall())
+    # print('from database: ')
+    # print(cursor.fetchall())
 
     # must close the dataset after manipulation
     connection.commit()
