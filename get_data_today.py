@@ -16,7 +16,7 @@ def main():
     try:
         # List: The base URL is /posts.json called with GET.
         # dataValues = { 'tags' : 'bomb_(artist)', 'limit': '50'}
-        dataValues = { 'tags' : 'muscular_male', 'limit': '50'}
+        dataValues = { 'tags' : 'muscular_male horse bull', 'limit': '200'}
         headerValues = { 'User-Agent' : 'Daily Fur App / 1.0 (by GypsyMonkey on e621)' }
         url = "https://e621.net/posts.json"
         # url = "http://httpbin.org/delay/5"
@@ -37,7 +37,8 @@ def main():
         images_key_info = []
         today_idc = TRUE
         for images in dataobj['posts']: 
-            image_datetime = str(images['created_at'])  
+            image_datetime = str(images['created_at'])
+            # if not today image, then pass it  
             if filter_date(image_datetime, today_idc):
                 pass
             images_key_info.append((images['file']['width'], 
@@ -46,32 +47,15 @@ def main():
                                     images['file']['url'],
                                     images['created_at']))
                                   
-            
+        # load all image download to the sqlite db    
         load_to_sqlite(images_key_info)
 
-        
-
-        # for record in records:
-        #     print(record)
-
+    # if http error
     except HTTPError as err:
         print("Error: {0}".format(err))
+    # if time out
     except Timeout as err:
         print("Request timed out: {0}".format(err))
-    
-
-
-
-# def printResults(resData):
-#     print("Result code: {0}".format(resData.status_code))
-#     print("\n")
-
-#     print("Returned data: ----------------------")
-#     print(resData.text)
-
-
-# class Images_info():
-#     def __init__(self, width, height, ):
         
 if __name__ == "__main__":
     # Execute when the module is not initialized from an import statement.
