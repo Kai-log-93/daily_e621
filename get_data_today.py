@@ -1,5 +1,5 @@
 # using the requests library to access internet data
-
+# reference: https://e621.net/help/api
 from operator import truediv
 from pickle import TRUE
 import sys
